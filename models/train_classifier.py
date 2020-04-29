@@ -1,5 +1,7 @@
 # Import libraries
-import sys, re, pickle
+import sys
+import re
+import pickle
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
@@ -15,7 +17,7 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.svm import LinearSVC
 from functools import partial
 from sklearn.metrics import classification_report, make_scorer, fbeta_score
-from sklearn.metrics import f1_score, accuracy_score
+from sklearn.metrics import f1_score, accuracy_score, recall_score, precision_score
 from sklearn.utils import parallel_backend
 
 
@@ -32,7 +34,7 @@ def load_data(database_filepath: str) -> Tuple[pd.Series, np.array, list]:
     category_names.  A list of category names.
     """
 
-    # Load data from database
+    # Load data from messages table in database
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table('messages', con=engine)
 
@@ -78,7 +80,7 @@ def tokenize(text: str) -> list:
 
 def calculate_multioutput_f2(y_test: np.array, preds: np.array) -> float:
     """ Custom scoring function to calculate and return the mean binary
-    F2 score across all categories
+    F2 score across all categories.
 
     Args:
     y_test: np.array.  Array of true feature test data.
@@ -105,7 +107,8 @@ def build_model() -> GridSearchCV:
     prediction.
 
     The hyperparameter grid for the grid search is narrowed based on prior
-    experimentation and the GridSearchCV object has a custom-defined scoring function.
+    experimentation and the GridSearchCV object has a custom-defined scoring function
+    to optimise the mean F2 score across all categories.
 
     Args:
     None
@@ -125,8 +128,8 @@ def build_model() -> GridSearchCV:
     # Note, this hyperparameter grid has been narrowed based on prior experimentation
     param_grid = {'tfidf__ngram_range': [(1,2)],
                   'tfidf__max_df': [0.7],
-                  'tfidf__use_idf': [False],
-                  'clf__estimator__C':np.logspace(-2, 5, 11)[5:7]}
+                  'tfidf__use_idf': [True],
+                  'clf__estimator__C':np.logspace(-2, 5, 11)[5:8]}
 
     # Assign custom scorer as the 'calculate_multioutput_f2' function
     scorer = make_scorer(calculate_multioutput_f2, greater_is_better=True)
@@ -140,9 +143,9 @@ def build_model() -> GridSearchCV:
 def evaluate_model(model: GridSearchCV, X_test: np.array, y_test: np.array, category_names:list):
 
     """ For each message category, display the classification report, baseline accuracy
-    and model F2 score. At the end of the classification reports for each category,
-    display the mean baseline accuracy, model accuracy, binary & weighted F1 & F2
-    scores, and binary precision and recall scores across all categories.
+    and model F2 score. After display these classification reports,display the mean baseline
+    accuracy, mean model accuracy, mean binary & weighted F1 & F2 scores, and mean binary
+    precision and recall scores across all categories.
 
     Args:
     model: GridSearchCV.  A fitted GridSearchCV instance.
@@ -197,7 +200,7 @@ def evaluate_model(model: GridSearchCV, X_test: np.array, y_test: np.array, cate
     print('-'*100)
 
 
-def save_model(model: GridSearchCV, model_filepath:str):
+def save_model(model: GridSearchCV, model_filepath: str):
     """ Export model as pickle file to specified filepath.
 
     Args:
@@ -220,15 +223,15 @@ def main():
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, \
                                                             random_state=55)
 
-        with parallel_backend('multiprocessing'):
+        with parallel_backend('multiprocessing'):  # Required for n_jobs=-1
             print('Building model...')
             model = build_model()
 
             print('Training model...')
             model.fit(X_train, y_train)
 
-            print(model.best_score_)
-            print(model.best_estimator_)
+            # print(model.best_score_)
+            # print(model.best_estimator_)
 
             print('Evaluating model...')
             evaluate_model(model, X_test, y_test, category_names)
