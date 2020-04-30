@@ -3,18 +3,18 @@
 
 {% block message %}
     <hr />
-    <h4 class="text-center">MESSAGE</h4>
-    <p class="text-center"><i>{{query}}</i></p>
+    <h4 class="text-center">MESSAGE:</h4><br>
+    <p class="text-center" style=font-size:22px><i>{{query}}</i></p>
 {% endblock %}
 
 {% block content %}
     <h1 class="text-center">Result</h1>
-        <ul class="list-group">
+        <ul class="list-group" style=font-size:20px>
             {% for category, classification in classification_result.items() %}
                 {% if classification == 1 %}
-                    <li class="list-group-item list-group-item-success text-center">{{category.replace('_', ' ').title()}}</li>
+                    <li class="list-group-item list-group-item-info text-center">{{category.replace('_', ' ').title()}}</li>
                 {% else %}
-                    <li class="list-group-item list-group-item-dark text-center">{{category.replace('_', ' ').title()}}</li>
+                    <li class="list-group-item list-group-item-light text-center">{{category.replace('_', ' ').title()}}</li>
                 {% endif %}
             {% endfor %}
 

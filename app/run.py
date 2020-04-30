@@ -5,11 +5,11 @@ import numpy as np
 import pickle
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
+from plotly.graph_objs import Bar, Histogram
 from sqlalchemy import create_engine
 
 # Load custom scorer and tokenize functions from dr_utils package, installed
-# as per README instructions.
+# as per README instructions
 from dr_utils.custom_functions import calculate_multioutput_f2, tokenize
 
 
@@ -33,28 +33,92 @@ model = pickle.load(open('../models/classifier.pkl', 'rb'))
 def index():
 
     # Extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
-    # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+    cat_ptgs = (100*df.iloc[:,4:].sum()/len(df)).sort_values(ascending=False)
+    cat_names = list(cat_ptgs.index)
+
+    non_cat_msg_length = df.loc[df.iloc[:,4:].sum(axis=1)==0,'message'].apply(len)
+    cat_msg_length = df.loc[df.iloc[:,4:].sum(axis=1)>0,'message'].apply(len)
+
+    # Create visuals
     graphs = [
         {
             'data': [
                 Bar(
                     x=genre_names,
-                    y=genre_counts
+                    y=genre_counts,
+                    marker_color='#14A64E'
                 )
             ],
 
             'layout': {
                 'title': 'Distribution of Message Genres',
+                'height':400,
+                'width':1000,
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+
+        {
+            'data': [
+                Bar(
+                    x=cat_names,
+                    y=cat_ptgs,
+                    marker_color='#F67D04'
+                )
+            ],
+
+            'layout': {
+                'title': 'Percentage of messages assigned to each category',
+                'height':500,
+                'width':1000,
+                # 'margin':{'b':150, 'l':200},
+                'yaxis': {
+                    'title': "Percentage (%)"
+                },
+                'xaxis': {
+                    'title': "Category",
+                    'tickangle':30
+                }
+            }
+        },
+
+        {
+            'data': [
+                Histogram(
+                    x=cat_msg_length,
+                    name='Categorised messages',
+                    marker_color='#8C11F2',
+                    # opacity=0.4
+                ),
+
+                Histogram(
+                    x=non_cat_msg_length,
+                    name='Non-categorised messages',
+                    marker_color='#3BB0CC',
+                    # opacity=0.4
+                ),
+            ],
+
+            'layout': {
+                'title': 'Histogram of message length (trucated at 500 characters)',
+                'height':600,
+                'width':1000,
+                'barmode':'overlay',
+                # 'margin':{'b':150, 'l':200},
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Message Length",
+                    'range':[0,500]
                 }
             }
         }
