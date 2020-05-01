@@ -1,10 +1,11 @@
 # Table of Contents
+
 1. [Background](#background)
 1. [Project Overview](#project-overview)
 1. [Installing](#installing)
-    1. [ Dependencies](#dependencies)
-    1. [Executing the program](#executing-the-program)
-    1.  [File Descriptions](#file-descriptions)
+    * [Dependencies](#dependencies)
+    * [Executing the program](#executing-the-program)
+    * [File Descriptions](#file-descriptions)
 1. [Author](#author)
 1. [License](#license)
 1. [Acknowledgements](#acknowledgements)
@@ -29,10 +30,16 @@ An ETL and ML pipeline was used to build a supervised learning model to categori
 
 # Installing
 Clone this GitHub repository:
-`git clone https://github.com/perkinsml/disaster_response_pipeline.git`
+
+```
+git clone https://github.com/perkinsml/disaster_response_pipeline.git
+```
 
 You'll need to install the dr_utils package included in the repository by typing the command below in the root directory.  
-`pip install .`
+
+```
+pip install .
+```
 
 The dr_utils package includes a custom word tokenise function and a model scorer function - both of which are required to run the ML pipeline.  Given the class imbalance of the dataset and the priority of recall in this scenario, a custom f-beta scorer (with beta=2) was used to evaluate the model during grid search.  Please refer to the *ML Pipeline Preparation.ipynb* notebook for more detail.
 
@@ -67,8 +74,6 @@ You can simply execute the following commands to run the web app., regardless of
 
 ## File Descriptions
 
-
-
 <pre><code>
 ├── data
 │   ├── disaster_messages.csv            # Dataset of messages
@@ -76,12 +81,6 @@ You can simply execute the following commands to run the web app., regardless of
 │   ├── process_data.py                  # ETL pipeline script
 |   ├── DisasterResponse.db              # SQLite database of message texts and categories
 |   └── ETL Pipeline Preparation.ipynb   # Notebook demonstrating ETL pipeline script
-|
-├── app
-│   ├── run.py                           # Flask file that runs the app
-│   └── templates
-│       ├── master.html                  # Main page of web app
-│       └── go.html                      # Classification results page of web app
 |
 ├── models
 │   ├── train_classifier.py              # ML pipeline script
@@ -91,7 +90,13 @@ You can simply execute the following commands to run the web app., regardless of
 ├── dr_utils
 |   └── custom_functions.py              # Custom functions used by  classification model
 |
-└── requirements.txt                     # A list of required libraries and their versions
+├── app
+│   ├── run.py                           # Flask file that runs the app
+│   └── templates
+│       ├── master.html                  # Main page of web app
+│       └── go.html                      # Classification results page of web app
+│
+├── requirements.txt                     # A list of required libraries and their versions
 |
 └── README.md
 </code></pre>
