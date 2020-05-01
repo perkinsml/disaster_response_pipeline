@@ -77,7 +77,7 @@ def index():
 
             'layout': {
                 'title': 'Percentage of messages assigned to each category',
-                'height':500,
+                'height':650,
                 'width':1000,
                 # 'margin':{'b':150, 'l':200},
                 'yaxis': {
@@ -85,8 +85,9 @@ def index():
                 },
                 'xaxis': {
                     'title': "Category",
-                    'tickangle':30
-                }
+                    'tickangle':30,
+                    'automargin':True
+                },
             }
         },
 
@@ -110,7 +111,7 @@ def index():
             'layout': {
                 'title': 'Histogram of message length (trucated at 500 characters)',
                 'height':600,
-                'width':1000,
+                'width':1200,
                 'barmode':'overlay',
                 # 'margin':{'b':150, 'l':200},
                 'yaxis': {
