@@ -44,4 +44,9 @@ An ETL and ML pipeline was used to build a supervised learning model to categori
 # Web App Screenshots
 Below is an example of the categorisation results by the web app for the message:
 > A massive fire has broken out after the storm. Homes are destroyed and people have been left homeless.  We need doctors and clothing.
-!('web_app_results_example.png')
+
+![results summary image]('https://github.com/perkinsml/disaster_response_pipeline/blob/master/web_app_results_example.png')
+
+The main page of the web app displays some visualisations of the message data provided by Figure Eight
+
+![data charts image](https://github.com/perkinsml/disaster_response_pipeline/blob/master/data_overview.png)
