@@ -62,15 +62,15 @@ A list of dependencies is included in the requirements.txt file in this reposito
 Run the following commands in the project's root directory to set up the database and model:
 1. To run the ETL pipeline that extracts, cleans and transforms the message and category data, and stores it in the DisasterResponse.db database:
 
-        ```
-        python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
-        ```
+    ```
+    python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
+    ```
 
 1. To run the ML pipeline that trains and saves the classifier:
 
-       ```
-       python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
-       ```
+   ```
+   python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
+   ```
 
 Re-running the ETL and ML pipelines is not necessary to start the web app.  
 
@@ -107,6 +107,8 @@ After following the installation instructions above, you can simply execute the 
 │       ├── master.html                  # Main page of web app
 │       └── go.html                      # Classification results page of web app
 │
+├── images                               # A folder of web app screen shots used on this page
+|
 ├── requirements.txt                     # A list of required libraries and their versions
 |
 └── README.md
