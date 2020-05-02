@@ -12,7 +12,7 @@
 1. [Acknowledgements](#acknowledgements)
 1. [Web App Screenshots](#web-app-screenshots)
 
-![web app header](https://github.com/perkinsml/disaster_response_pipeline/blob/master/web_app_header.png)
+![web app header](https://github.com/perkinsml/disaster_response_pipeline/blob/master/images/web_app_header.png)
 
 # Background
 In a disaster situation, the crisis management response is typically spread across a range of organisations, with each one focussing on different components of the problem (e.g. water, aid, shelter, medical help, transport etc.).   The response of these organisations is informed by the millions and millions of communications – received either directly or via social media – that are typically generated during a disaster.  These communications are received at a time when organisations have the least capacity to manually filter through them to identify the priority communications that are relevant to their organisation’s response.
@@ -61,10 +61,13 @@ A list of dependencies is included in the requirements.txt file in this reposito
 ## Executing the program
 Run the following commands in the project's root directory to set up the database and model:
 1. To run the ETL pipeline that extracts, cleans and transforms the message and category data, and stores it in the DisasterResponse.db database:
+
         ```
         python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
         ```
+
 1. To run the ML pipeline that trains and saves the classifier:
+
        ```
        python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
        ```
@@ -126,8 +129,8 @@ Below is an example of the categorisation results displayed by the web app for t
 
 >A massive fire has broken out after the storm. Homes are destroyed<br> and people have been left homeless.  We need doctors and clothing.
 
-![results summary image](https://github.com/perkinsml/disaster_response_pipeline/blob/master/web_app_results_example.png)
+![results summary image](https://github.com/perkinsml/disaster_response_pipeline/blob/master/images/web_app_results_example.png)
 
 The main page of the web app displays some visualisations of the message data provided by Figure Eight
 
-![data charts image](https://github.com/perkinsml/disaster_response_pipeline/blob/master/data_overview.png)
+![data charts image](https://github.com/perkinsml/disaster_response_pipeline/blob/master/images/data_overview.png)
