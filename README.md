@@ -2,7 +2,8 @@
 
 1. [Background](#background)
 1. [Project Overview](#project-overview)
-1. [Installing](#installing)
+1. [Using the web application](#using-the-web-application)
+1. [Installation](#installation)
     * [Dependencies](#dependencies)
     * [Executing the program](#executing-the-program)
     * [File Descriptions](#file-descriptions)
@@ -28,7 +29,10 @@ An ETL and ML pipeline was used to build a supervised learning model to categori
 1. **Machine Learning**: a ML pipeline to train and evaluate a model to classify text messages into a range of categories
 1. **Web App**: to provide an online tool that can be used to classify messages real-time
 
-# Installing
+# Using the web application
+The **Disaster Response Message Classifier web application is live** and can be accessed [here](https://dismsgclf.herokuapp.com/).  No installations are required to use the web app.
+
+# Installation
 Clone this GitHub repository:
 
 ```
@@ -57,13 +61,17 @@ A list of dependencies is included in the requirements.txt file in this reposito
 ## Executing the program
 Run the following commands in the project's root directory to set up the database and model:
 1. To run the ETL pipeline that extracts, cleans and transforms the message and category data, and stores it in the DisasterResponse.db database:
-        `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+        ```
+        python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
+        ```
 1. To run the ML pipeline that trains and saves the classifier:
-        `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
+       ```
+       python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
+       ```
 
-Running the ETL and ML pipelines is not necessary to start the web app.  
+Re-running the ETL and ML pipelines is not necessary to start the web app.  
 
-You can simply execute the following commands to run the web app., regardless of whether or not you choose to run the ETL and ML pipelines:
+After following the installation instructions above, you can simply execute the following commands to run the web app., regardless of whether or not you choose to re-run the ETL and ML pipelines:
 1. From the app directory:
     ```
     export FLASK_APP=run.py
