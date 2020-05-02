@@ -7,6 +7,7 @@
     * [Dependencies](#dependencies)
     * [Executing the program](#executing-the-program)
     * [File Descriptions](#file-descriptions)
+1. [Machine Learning considerations](#machine-learning-considerations)
 1. [Author](#author)
 1. [License](#license)
 1. [Acknowledgements](#acknowledgements)
@@ -114,6 +115,11 @@ After following the installation instructions above, you can simply execute the 
 └── README.md
 </code></pre>
 
+# Machine Learning considerations
+The dataset includes 36 message categories - one of which ('child_alone') is not relevant to any messages.  After testing a range of classification algorithms, I found the LinearSVC model to achieve the best results.  The solver for this algorithm requires at least 2 classes in the data, so the 'child_alone' category was dropped from the data.
+
+As shown in the web app and the *ML Pipeline Preparation.ipynb* notebook, the dataset is imbalanced and just 3 of the remaining 35 categories have more than 20% of messages assigned to them. Given this class imbalance, accuracy was not the most robust metric for evaluating the model performance.  Given the use case and hence the importance of recall (i.e. the need to identify messages relevant for each category) in this situation, I elected to use a the mean F2 score across all 35 categories to evaluate model performance.   
+
 # Author
 [Matthew Perkins](https://github.com/perkinsml)
 
@@ -122,7 +128,7 @@ After following the installation instructions above, you can simply execute the 
 
 # Acknowledgements
 * [Udacity](https://www.udacity.com/) for designing the Project
-* [Figure8 (now known as Appen)](https://appen.com/) for providing the annotated dataset
+* [Figure8 (now known as Appen)](https://appen.com/) for collating and labelling the dataset
 
 
 
